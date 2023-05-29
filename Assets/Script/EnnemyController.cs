@@ -19,15 +19,51 @@ public class EnnemyController : MonoBehaviour
     [SerializeField]
     private bool isAggressive = true;
 
-    public float actualTime; // Le temps qui passe
-    public bool canLerp = true;
+    public float actualTime; // Le temps qui passe pour l'attaque, a voir si cette variable est utile
 
-    //Ajouter des variables pour ne pas avoir une distance fixe. Chaque ennemi/famille d'ennemi pourrait ne pas avoir la même distance d'aggression. 
+
+    public float actualTimeToMove; // Le temps qui passe pour le changement de position
+
+    //Les 3 positions sur lesquelles les ennemis tourneront. A voir si on en mettra plus ou moins selon les lieux/ennemis/groupe etc ...
+    public Vector3 position1;
+    public Vector3 position2;
+    public Vector3 position3;
+
+    //A voir si ceux la sont utile
+    public bool canLerp = true;
+    public bool canLerpMove = true;
+
+    //Les états que peut avoir un ennemi. Ils sont à renommer
+    public enum StateEnnemy
+    {
+        toMove = 0,
+        toAttack = 1,
+    }
+
+    //Les états pour les positions quand les ennemis tournent sur la map. A renommer voir à changer le système
+    public enum StatePosition
+    {
+        pos1 = 0,
+        pos2 = 1,
+        pos3 = 2,
+    }
+
+    public StateEnnemy state;
+    public StatePosition ennemyPositions;
 
     // Start is called before the first frame update
     void Start()
     {
         originPosition = transform.position;
+        //On initialise les enum
+        state = StateEnnemy.toMove;
+        ennemyPositions = StatePosition.pos1;
+
+        //On initialise les positions sur lequels ils vont tourner. Idéalement, cela sera fait de manière automatique par la suite. Via un NavMesh ??
+        position1 = new Vector3(-20.0f, 0.5f, 0.0f);
+        position2 = new Vector3(-10.0f, 0.5f, 0.0f);
+        position3 = new Vector3(-15.0f, 0.5f, 10.0f);
+        
 
     }
 
@@ -39,10 +75,9 @@ public class EnnemyController : MonoBehaviour
             distanceToHero = Vector3.Distance(heroToAttack.transform.position, transform.position); // On récupère la distance entre 2 position
             if (distanceToHero < distanceToAttack)
             {
-                Attack();
+                state = StateEnnemy.toAttack;
 
 
-                //Je lance le combat
                 Debug.Log("J'attaque le héros");
 
             }
@@ -50,12 +85,22 @@ public class EnnemyController : MonoBehaviour
             {
                 Debug.Log("Le héros est trop loin");
                 transform.position = originPosition;
+                state = StateEnnemy.toMove;
 
             }
         }
         else
         {
-            transform.position = originPosition;
+            //transform.position = originPosition;
+        }
+
+        if(state == StateEnnemy.toAttack)
+        {
+            //Attack();
+        }
+        else
+        {
+            move();
         }
     }
 
@@ -73,7 +118,7 @@ public class EnnemyController : MonoBehaviour
 
 
 
-            if(actualTime > 5.1f)
+            if(actualTime > 2.1f)
             {
                 canLerp = false;
                 actualTime = 0.0f;
@@ -86,9 +131,48 @@ public class EnnemyController : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    public void move()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, transform.position - transform.forward);
+        //Premier changement de position
+        if (canLerpMove && ennemyPositions == StatePosition.pos1)
+        {
+            Debug.Log("Coucou 1");
+            actualTimeToMove += Time.deltaTime; // On récupère le temps qui passe
+            transform.position = Vector3.Lerp(position1, position2, actualTimeToMove); // On fait bouger l'ennemi vers la position suivante, et on utilise le temps pour que ce déplacement se fasse de manière smooth
+
+            if (actualTimeToMove > 1.1f)
+            {
+                //canLerpMove = false;
+                actualTimeToMove = 0.0f; // On remet le temps à 0 pour le mouvement suivant. 
+                ennemyPositions = StatePosition.pos2; // Si le temps est écoulé, on change l'état de la position. 
+            }
+        }
+        //Deuxième changement de position
+        else if (canLerpMove && ennemyPositions == StatePosition.pos2)
+        {
+            Debug.Log("Coucou 2");
+            actualTimeToMove += Time.deltaTime;
+            transform.position = Vector3.Lerp(position2, position3, actualTimeToMove);
+            if (actualTimeToMove > 1.1f)
+            {
+                //canLerpMove = false;
+                actualTimeToMove = 0.0f;
+                ennemyPositions = StatePosition.pos3;
+            }
+        }
+        //Retour à la première position. 
+        else if (canLerpMove && ennemyPositions == StatePosition.pos3)
+        {
+            Debug.Log("Coucou 3");
+            actualTimeToMove += Time.deltaTime;
+            transform.position = Vector3.Lerp(position3, position1, actualTimeToMove);
+            
+            if (actualTimeToMove > 1.1f)
+            {
+                //canLerpMove = false;
+                actualTimeToMove = 0.0f; 
+                ennemyPositions = StatePosition.pos1;
+            }
+        }
     }
 }

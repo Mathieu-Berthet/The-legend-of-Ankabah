@@ -158,9 +158,16 @@ MonoBehaviour:
   distanceToAttack: 25
   heroToAttack: {fileID: 260937852}
   originPosition: {x: 0, y: 0, z: 0}
-  isAggressive: 1
+  isAggressive: 0
   actualTime: 0
+  actualTimeToMove: 0
+  position1: {x: 0, y: 0, z: 0}
+  position2: {x: 0, y: 0, z: 0}
+  position3: {x: 0, y: 0, z: 0}
   canLerp: 1
+  canLerpMove: 1
+  state: 0
+  ennemyPositions: 0
 --- !u!135 &60859939
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -232,7 +239,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 60859936}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.01, y: 1.4306281, z: 0.06860483}
+  m_LocalPosition: {x: -20, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
