@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class EnnemyController : MonoBehaviour
 {
+    public int life = 20;
+
+
     [SerializeField]
     private float distanceToAttack; // La distance a laquelle l'ennemi va attaquer les héros
 
@@ -100,8 +103,10 @@ public class EnnemyController : MonoBehaviour
         }
         else
         {
-            move();
+            //move();
         }
+
+        kill();
     }
 
 
@@ -173,6 +178,31 @@ public class EnnemyController : MonoBehaviour
                 actualTimeToMove = 0.0f; 
                 ennemyPositions = StatePosition.pos1;
             }
+        }
+    }
+
+
+    //Quand l'ennemi entre en collision avec le héros
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.name == "Player") // Si la cible est le joueur
+        {
+            Debug.Log("Attaque heros");
+            damage(); // On calcule les dégâts
+        }
+    }
+
+    public void damage()
+    {
+        heroToAttack.GetComponent<PlayerController>().life = heroToAttack.GetComponent<PlayerController>().life - 2;
+    }
+
+    //Pour quand l'ennemi est mort. Reste plus qu'a créer le comportement de la mort
+    public void kill()
+    {
+        if (life <= 0)
+        {
+            Debug.Log("Ennemi : Je suis mort");
         }
     }
 }
