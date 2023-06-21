@@ -460,8 +460,7 @@ MonoBehaviour:
   mouseSensitivityX: 3
   mouseSensitivityY: 3
   motor: {fileID: 0}
-  sword: {fileID: 0}
-  projectile: {fileID: 0}
+  projectile: {fileID: 6089347420390809153, guid: 355e46f62979be54d817aeeb68fdfa1b, type: 3}
 --- !u!114 &260937858
 MonoBehaviour:
   m_ObjectHideFlags: 0

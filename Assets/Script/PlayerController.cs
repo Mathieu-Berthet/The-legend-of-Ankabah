@@ -54,6 +54,13 @@ public class PlayerController : MonoBehaviour
         Vector3 cameraRotation = new Vector3(xRotation, 0, 0) * mouseSensitivityY ;
 
         motor.RotateCamera(cameraRotation);
+
+
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            launchProjectile();
+        }
+
         kill();
     }
 
@@ -64,5 +71,12 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Heros Je suis mort");
         }
+    }
+
+    //Fonction qui instancie le projectile et lui ajoute le script
+    public void launchProjectile()
+    {
+        GameObject projectileLaunched = Instantiate(projectile, transform.position, Quaternion.identity);
+        projectileLaunched.AddComponent<ProjectileController>();
     }
 }
