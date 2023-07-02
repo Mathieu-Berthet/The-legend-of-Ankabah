@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMotor : MonoBehaviour
 {
+
+    //for the camera gestion
     [SerializeField]
     private Camera cam;
     private Vector3 velocity;
@@ -41,6 +43,13 @@ public class PlayerMotor : MonoBehaviour
         {
             rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
         }
+    }
+
+    public void ApplyJump(Vector3 jumpVelocity)
+    {
+        // Ajouter la vélocité de saut à la vélocité actuelle du joueur
+        Vector3 newVelocity = rb.velocity + jumpVelocity;
+        rb.velocity = newVelocity;
     }
 
     private void PerformRotation()
