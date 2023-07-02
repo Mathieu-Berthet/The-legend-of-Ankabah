@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     private float mouseSensitivityY = 3f;
 
     [SerializeField]
-    [SerializeField]
     private float jumpHeight = 5f;
 
     [SerializeField]
