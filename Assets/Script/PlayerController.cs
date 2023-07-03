@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject projectile; // Projectile qui sera lancer
 
+    [SerializeField]
+    private Camera camera;
+
 
     private void Start()
     {
@@ -91,8 +94,9 @@ public class PlayerController : MonoBehaviour
     //Fonction qui instancie le projectile et lui ajoute le script
     public void launchProjectile()
     {
-        GameObject projectileLaunched = Instantiate(projectile, transform.position, Quaternion.identity);
+        GameObject projectileLaunched = Instantiate(projectile, camera.transform.position, camera.transform.rotation);
         projectileLaunched.AddComponent<ProjectileController>();
+        projectileLaunched.GetComponent<Rigidbody>().velocity = projectileLaunched.transform.forward * 100.0f;
     }
 
     private void StartJump()

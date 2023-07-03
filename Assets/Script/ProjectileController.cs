@@ -27,7 +27,7 @@ public class ProjectileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rigidBody.AddForce(transform.forward * force); // On lui ajoute une force pour le faire bouger
+        //rigidBody.AddForce(transform.forward * force); // On lui ajoute une force pour le faire bouger
     }
 
 
