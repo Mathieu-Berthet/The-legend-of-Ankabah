@@ -5,13 +5,16 @@ using System.Collections;
 [RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour
 {
+    public int life = 20;
+
     // this sctript is for the movement of the player
     [SerializeField] // see variable on inspector
     private float speed = 3f;
 
-        [SerializeField] // see variable on inspector
+    [SerializeField] // see variable on inspector
     private float mouseSensitivityX = 3f;
-            [SerializeField] // see variable on inspector
+
+    [SerializeField] // see variable on inspector
     private float mouseSensitivityY = 3f;
 
     [SerializeField]
@@ -25,9 +28,14 @@ public class PlayerController : MonoBehaviour
 
     private PlayerMotor motor;
 
+    [SerializeField]
+    private GameObject projectile; // Projectile qui sera lancer
+
+
     private void Start()
     {
         motor = GetComponent<PlayerMotor>(); // link PalyerMotor on this class
+        
         jumpsRemaining = maxJumps;
     }
 
@@ -61,6 +69,30 @@ public class PlayerController : MonoBehaviour
         Vector3 cameraRotation = new Vector3(xRotation, 0, 0) * mouseSensitivityY ;
 
         motor.RotateCamera(cameraRotation);
+
+
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            launchProjectile();
+        }
+
+        kill();
+    }
+
+    //Quand le h�ros a plus de PV. Reste plus qu'a cr�er le comportement de la mort
+    public void kill()
+    {
+        if (life <= 0)
+        {
+            Debug.Log("Heros Je suis mort");
+        }
+    }
+
+    //Fonction qui instancie le projectile et lui ajoute le script
+    public void launchProjectile()
+    {
+        GameObject projectileLaunched = Instantiate(projectile, transform.position, Quaternion.identity);
+        projectileLaunched.AddComponent<ProjectileController>();
     }
 
     private void StartJump()
