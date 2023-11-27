@@ -158,7 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 20
   distanceToAttack: 25
-  heroToAttack: {fileID: 0}
+  heroToAttack: {fileID: 956735180}
   originPosition: {x: 0, y: 0, z: 0}
   isAggressive: 0
   actualTime: 0
@@ -262,7 +262,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &124706582
 GameObject:
@@ -573,7 +573,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956735180}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -690,7 +690,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
