@@ -183,9 +183,9 @@ public class EnnemyController : MonoBehaviour
 
 
     //Quand l'ennemi entre en collision avec le héros
-    public void OnTriggerEnter(Collider other)
+    public void OnCollisionEnter(Collision other)
     {
-        if (other.name == "Player") // Si la cible est le joueur
+        if (other.collider.name == "Player") // Si la cible est le joueur
         {
             Debug.Log("Attaque heros");
             damage(); // On calcule les dégâts
